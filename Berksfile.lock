@@ -1,0 +1,7 @@
+{
+  "sources": {
+    "kibana": {
+      "path": "./site-cookbooks/kibana"
+    }
+  }
+}
