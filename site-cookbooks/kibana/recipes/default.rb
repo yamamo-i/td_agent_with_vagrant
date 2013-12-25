@@ -24,7 +24,7 @@ bash "install_kibana" do
     gem install bundler
     gem install eventmachine -v '1.0.3'
     bundle install
-    mv /tmp/KibanaConfig.rb ~/app/
+    mv /tmp/KibanaConfig.rb ~/app/Kibana
   EOF
 end
 

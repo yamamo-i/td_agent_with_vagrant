@@ -1,0 +1,89 @@
+h1. td_agent_with_vagrant
+
+h2. 概要
+
+td-agent + Kibana + elasticsearchで簡単なログ転送+GUI環境をvirtualbox上にvagrantで作成するコンポーネントです。
+apacheのaccessログをtd-agentがelasticsearchに向かって投げ込みます。
+参考サイト http://memocra.blogspot.jp/2013/04/kibanakibanaelasticsearchfluentd.html
+
+h2. 事前準備
+
+* virtual_boxのinstall
+https://www.virtualbox.org
+* vagrant + pluginのinstall
+http://www.vagrantup.com
+
+<pre>
+$ vagrant plugin install vagrant-omnibus
+$ vagrant plugin install vagrant-berkshelf
+</pre>
+
+* Berksfileのinstall
+http://qiita.com/uchiunyo/items/5aa243f7a39ae443e10d
+
+<pre>
+$ gem install berkshelf
+</pre>
+
+h2. 使い方
+
+h3. コンポーネント準備
+
+* コンポーネントの取得
+
+<pre>
+$ git clone git@github.com:yamamo-i/td_agent_with_vagrant.git
+</pre>
+
+* vagrantでvmをあげる
+下記コマンドでapache + td-agentのホストと、elasticsearch + Kibanaの2ホストが立ち上がる
+
+<pre>
+$ vagrant up
+
+#apache起動のホストに接続する場合
+$ vagrant ssh apache
+
+#elasticsearch + Kibanaに接続する場合
+$ vagrant ssh search
+</pre>
+
+h3. NWの確認
+
+* 各ホストに入ってprivateアドレスが正しく着いているか確認
+
+<pre>
+#各ホスト内で192.168.0.2 / 192.168.0.3が着いていることを確認する
+ifconfig
+</pre>
+
+h3. Kibanaの立ち上げ
+
+* Kibanaを立ち上げる
+
+<pre>
+#vmに接続する
+$ vagrant ssh search
+
+#vm内でroot権限でKibanaを立ち上げる
+$ sudo su - root
+$ cd app/Kibana
+$ ruby kibana.rb
+
+#確認
+$ ps aux | grep kibana
+$ ps aux | grep elasticsearch
+</pre>
+
+h3. 動作確認
+
+* Kibanaの動作確認のため以下にアクセス
+http//127.0.0.1:5601
+* localhostからapacheにログを出力する
+
+<pre>
+$ curl http://127.0.0.1:8000
+</pre>
+
+* KibanaのGUIにaccessログが出力される
+http//127.0.0.1:5601
