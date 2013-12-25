@@ -2,6 +2,15 @@
   "sources": {
     "kibana": {
       "path": "./site-cookbooks/kibana"
+    },
+    "elasticsearch": {
+      "path": "./site-cookbooks/elasticsearch"
+    },
+    "apache": {
+      "path": "./site-cookbooks/apache"
+    },
+    "fluentd": {
+      "path": "./site-cookbooks/fluentd"
     }
   }
 }

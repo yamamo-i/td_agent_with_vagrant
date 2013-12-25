@@ -6,30 +6,17 @@
 #
 # All rights reserved - Do Not Redistribute
 
-#package "openjdk-6"
-#  action :install
-#end
-
 cookbook_file "/tmp/KibanaConfig.rb" do
   source "KibanaConfig.rb"
   mode "664"
 end
 
-bash "install_elasticsearch" do
-  user "root"
-  code <<-EOF
-    cd ~/
-    mkdir -p app
-    cd app/
-    curl -OL https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.6.tar.gz
-    tar xzvf elasticsearch-0.20.6.tar.gz
-    cd elasticsearch-0.20.6
-  EOF
-end
+log "start: install_kibana"
 
 bash "install_kibana" do
   user "root"
   code <<-EOF
+    mkdir -p app
     cd ~/app
     apt-get -y install gcc ruby ruby-devel rubygems rdoc
     git clone --branch=kibana-ruby https://github.com/rashidkpc/Kibana.git
@@ -37,17 +24,11 @@ bash "install_kibana" do
     gem install bundler
     gem install eventmachine -v '1.0.3'
     bundle install
-    mv /tmp/KibanaConfig.rb ~/
+    mv /tmp/KibanaConfig.rb ~/app/
   EOF
 end
 
-execute "start-elasticsearch" do
-  user "root"
-  command "~/app/elasticsearch-0.20.6/bin/elasticsearch -f &"
-  action :run
-end
-
-log "start: kibana up" do message "start: kibana up" end
+log "finish: install_kibana"
 
 execute "start-kibana" do
   user "root"
@@ -55,4 +36,3 @@ execute "start-kibana" do
   action :run
 end
 
-log "finish: kibana up" do message "finish: kibana up" end
