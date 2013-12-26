@@ -12,15 +12,13 @@ bash "install_elasticsearch" do
     cd ~/
     mkdir -p app
     cd app/
-    curl -OL https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.6.tar.gz
-    tar xzvf elasticsearch-0.20.6.tar.gz
-    cd elasticsearch-0.20.6
+    wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.9.deb
+    dpkg -i elasticsearch-0.90.9.deb
+    rm elasticsearch-0.90.9.deb
   EOF
 end
 
-execute "start-elasticsearch" do
-  user "root"
-  command "~/app/elasticsearch-0.20.6/bin/elasticsearch -f &"
-  action :run
+service "elasticsearch" do
+  action :start
 end
 

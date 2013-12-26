@@ -28,7 +28,7 @@ bash "elastic-search-plugin-install" do
   user "root"
   code <<-EOF
     /usr/lib/fluent/ruby/bin/fluent-gem install fluent-plugin-elasticsearch
-    mv /etc/td-agnet/td-agent.conf /ert/td-agent/td-agent.conf.default
+    mv /etc/td-agnet/td-agent.conf /etc/td-agent/td-agent.conf.default
     mv /tmp/td-agent.conf /etc/td-agent/td-agent.conf
   EOF
 end

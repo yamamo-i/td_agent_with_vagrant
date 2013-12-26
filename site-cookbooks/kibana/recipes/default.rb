@@ -30,9 +30,8 @@ end
 
 log "finish: install_kibana"
 
-execute "start-kibana" do
+bash "start-kibana" do
   user "root"
   command "ruby ~/app/Kibana/kibana.rb &"
-  action :run
 end
 
